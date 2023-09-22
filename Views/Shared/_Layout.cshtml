@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Internship</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Internship.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand mx-auto" asp-area="" asp-controller="Home" asp-action="Index" style="text-align: center;">Internship</a>
+            </div>
+            <div class="container-fluid">
+                <a class="navbar-brand mx-auto" asp-area="" asp-controller="Import" asp-action="Upload" style="text-align: center;">Import</a>
+            </div>
+            <div class="container-fluid">
+                <a class="navbar-brand mx-auto" asp-area="" asp-controller="Export" asp-action="Export" style="text-align: center;">Export</a>
+            </div>
+            <div class="container-fluid">
+                <a class="navbar-brand mx-auto" asp-area="" asp-controller="Export" asp-action="Modify" style="text-align: center;">Modify</a>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container" style="text-align: center;">
+            &copy; 2023 - Internship <a asp-area="" asp-controller="Home"></a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h2 style="text-align: center;">Welcome to the Home Page!</h2>
+
+<div style="text-align: center; margin-top: 20px;">
+    <form asp-controller="Import" asp-action="Upload" method="post" style="display: inline;">
+        <button type="submit" class="btn btn-primary">Import</button>
+    </form>
+
+    <span style="margin: 0 10px;"></span> 
+
+    <form asp-controller="Export" asp-action="Export" method="post" style="display: inline;">
+        <button type="submit" class="btn btn-primary">Export</button>
+    </form>
+
+    <span style="margin: 0 10px;"></span>
+
+    <form asp-controller="Export" asp-action="Modify" method="post" style="display: inline;">
+        <button type="submit" class="btn btn-primary">Modify</button>
+    </form>
+</div>

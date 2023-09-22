@@ -1,0 +1,31 @@
+﻿@model List<List<string>>
+
+<h1>Download Data</h1>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            @foreach (var header in Model[0])
+            {
+                    <th>@header</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @for (var i = 1; i < Model.Count; i++)
+        {
+                <tr>
+                @foreach (var value in Model[i])
+                {
+                            <td>@value</td>
+                }
+                </tr>
+        }
+    </tbody>
+</table>
+
+@{
+    var csvData = string.Join(Environment.NewLine, Model.Select(row => string.Join(",", row)));
+}
+
+<a id="downloadButton" class="btn btn-primary" href="data:text/csv;charset=utf-8,@Html.Raw(Uri.EscapeDataString(csvData))" download="table_data.csv">Download</a>

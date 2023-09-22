@@ -1,0 +1,94 @@
+﻿@model ExportModel
+
+<h1>Export Data</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Databases</h3>
+            <select id="databaseSelect" class="form-control">
+                <option value="">Select a database</option>
+                @foreach (var database in Model.Databases)
+                {
+                    <option value="@database">@database</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-6">
+            <h3>Tables</h3>
+            <select id="tableSelect" class="form-control" disabled>
+                <option value="">Select a table</option>
+            </select>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <form id="exportForm" method="post" action="@Url.Action("ConfirmExport", "Export")">
+                <input type="hidden" id="databaseInput" name="database" />
+                <input type="hidden" id="tableInput" name="table" />
+                <button id="confirmButton" class="btn btn-primary" disabled>Confirm</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            // Handle database selection change event
+            $("#databaseSelect").change(function () {
+                var database = $(this).val();
+                if (database !== "") {
+                    // Enable table selection
+                    $("#tableSelect").prop("disabled", false);
+                    // Fetch tables for the selected database
+                    $.ajax({
+                        url: "@Url.Action("GetTables", "Export")",
+                        method: "GET",
+                        data: { database: database },
+                        success: function (response) {
+                            // Clear previous table options
+                            $("#tableSelect").empty();
+                            $("#tableSelect").append('<option value="">Select a table</option>');
+
+                            // Populate table options
+                            for (var i = 0; i < response.length; i++) {
+                                $("#tableSelect").append('<option value="' + response[i] + '">' + response[i] + '</option>');
+                            }
+                        }
+                    });
+                } else {
+                    // Disable table selection and confirm button if no database is selected
+                    $("#tableSelect").prop("disabled", true);
+                    $("#confirmButton").prop("disabled", true);
+                }
+            });
+
+            // Handle table selection change event
+            $("#tableSelect").change(function () {
+                var table = $(this).val();
+                if (table !== "") {
+                    // Enable confirm button
+                    $("#confirmButton").prop("disabled", false);
+                    // Set the selected database and table values in the hidden input fields
+                    $("#databaseInput").val($("#databaseSelect").val());
+                    $("#tableInput").val(table);
+                } else {
+                    // Disable confirm button if no table is selected
+                    $("#confirmButton").prop("disabled", true);
+                    // Clear the selected database and table values from the hidden input fields
+                    $("#databaseInput").val("");
+                    $("#tableInput").val("");
+                }
+            });
+
+            // Handle form submission
+            $("#exportForm").submit(function () {
+                if ($("#tableInput").val() === "") {
+                    // Prevent form submission if no table is selected
+                    return false;
+                }
+            });
+        });
+    </script>
+}
